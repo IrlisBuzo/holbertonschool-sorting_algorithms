@@ -6,7 +6,7 @@
  * @n1: A pointer to the first node to swap.
  * @n2: The second node to swap.
  */
-void swap_nodes(listint_t **h, listint_t **n1, listint_t *n2)
+/*void swap_nodes(listint_t **h, listint_t **n1, listint_t *n2)
 {
 	(*n1)->next = n2->next;
 	if (n2->next != NULL)
@@ -19,7 +19,7 @@ void swap_nodes(listint_t **h, listint_t **n1, listint_t *n2)
 		*h = n2;
 	(*n1)->prev = n2;
 	*n1 = n2->prev;
-}
+}*/
 
 /**
  * insertion_sort_list - Sorts a doubly linked list of integers
@@ -28,7 +28,7 @@ void swap_nodes(listint_t **h, listint_t **n1, listint_t *n2)
  *
  * Description: Prints the list after each swap.
  */
-void insertion_sort_list(listint_t **list)
+/*void insertion_sort_list(listint_t **list)
 {
 	listint_t *iter, *insert, *tmp;
 
@@ -45,4 +45,38 @@ void insertion_sort_list(listint_t **list)
 			print_list((const listint_t *)*list);
 		}
 	}
+}*/
+
+
+
+
+void insertion_sort_list(listint_t **list)
+{
+  listint_t *current = NULL;
+
+  if (list == NULL)
+    return;
+
+  current = (*list)->next;
+  while (current != NULL)
+    {
+      while (current->prev != NULL && current->prev->n > current->n)
+	{
+	  current->prev->next = current->next;
+	  if (current->next != NULL)
+	    current->next->prev = current->prev;
+
+	  current->next = current->prev;
+	  current->prev = current->next->prev;
+	  current->next->prev = current;
+
+	  if (current->prev == NULL)
+	    *list = current;
+	  else
+	    current->prev->next = current;
+
+	  print_list(*list);
+	}
+      current = current->next;
+    }
 }
